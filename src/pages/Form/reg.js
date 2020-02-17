@@ -105,6 +105,13 @@ class Register extends React.Component {
                 <TimePicker />
               )}
             </Form.Item>
+            <Form.Item label='上传头像' {...formItemLayout}>
+              {getFieldDecorator('time', {
+                initialValue: moment(),//不填参数，默认现在时间
+              })(
+                <TimePicker />
+              )}
+            </Form.Item>
           </Form>
         </Card>
       </div>
