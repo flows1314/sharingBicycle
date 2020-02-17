@@ -1,0 +1,48 @@
+.header{
+  width: calc(100%);
+  .header-top{
+    height: 50px;
+    line-height: 50px;
+    text-align: right;
+    margin-right: 24px;
+    font-size: 14px;
+    a{
+      color: #ff5400;
+      padding-left: 30px;
+    }
+  }
+  .breadcrumb{
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid #f9c700;
+    // background: red;
+    .breadcrumb-title{
+      position: relative;
+      text-align: center;
+      font-size: 17px;
+      //主页下的三角形
+      &:after{
+        position: absolute;
+        left: 76px;
+        top: 38px;
+        content: '';
+        border-top: 15px solid #ffffff;
+        border-left: 17px solid #ff000000;
+        border-right: 17px solid #ff000000;
+        
+      }
+    }
+    .breadcrumb-time-weather{
+      text-align: right;
+      font-size: 14px;
+      span{
+        margin-right: 11px;
+      }
+      img{
+        width: 20px;
+        height: 14px;
+        margin-right: 10px;
+      }
+    }
+  }
+}
