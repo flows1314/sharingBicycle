@@ -14,6 +14,7 @@ import Gallery from './pages/Gallery';
 import Tabs from './pages/Tabs';
 import Carousel from './pages/Carousel';
 import Log from './pages/Form/log';
+import Register from './pages/Form/reg';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 class Router extends React.Component {
   render() {
@@ -34,8 +35,10 @@ class Router extends React.Component {
                 <Route path='/admin/ui/tabs' component={Tabs}></Route>
                 <Route path='/admin/ui/carousel' component={Carousel}></Route>
                 <Route path='/admin/form/log' component={Log}></Route>
+                <Route path='/admin/form/register' component={Register}></Route>
                 <Route path='/admin/table/basic' component={TableBasic}></Route>
                 <Route path='/admin/table/high' component={HighTable}></Route>
+
               </Admin>}>
             </Route>
           </Switch>
