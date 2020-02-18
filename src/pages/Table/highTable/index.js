@@ -43,7 +43,7 @@ class HighTable extends React.Component {
 
   handleSorter = (pagination, filters, sorter) => {
     this.setState({
-      sortOrder: sorter.order 
+      sortOrder: sorter.order
       //sorter.order 排序有ascend（升序），discend（降序）和默认排序
     })
   }
@@ -65,19 +65,19 @@ class HighTable extends React.Component {
       {
         title: '序号',
         dataIndex: 'id',
-        width:150,
-        fixed:'left',
+        width: 150,
+        fixed: 'left',
       },
       {
         title: '姓名',
         dataIndex: 'name',
-        width:150,
-        fixed:'left',
+        width: 150,
+        fixed: 'left',
       },
       {
         title: '性别',
         dataIndex: 'sex',
-        width:120,
+        width: 120,
         render(sex) {
           let config = {
             '1': '男',
@@ -89,7 +89,7 @@ class HighTable extends React.Component {
       {
         title: '状态',
         dataIndex: 'state',
-        width:120,
+        width: 120,
         render(state) {
           let config = {
             '1': '悲伤',
@@ -104,7 +104,7 @@ class HighTable extends React.Component {
       {
         title: '性别',
         dataIndex: 'sex',
-        width:120,
+        width: 120,
         render(sex) {
           let config = {
             '1': '男',
@@ -116,7 +116,7 @@ class HighTable extends React.Component {
       {
         title: '状态',
         dataIndex: 'state',
-        width:120,
+        width: 120,
         render(state) {
           let config = {
             '1': '悲伤',
@@ -131,7 +131,7 @@ class HighTable extends React.Component {
       {
         title: '爱好',
         dataIndex: 'hobby',
-        width:120,
+        width: 120,
         render(hobby) {
           let config = {
             '1': '打篮球',
@@ -146,13 +146,13 @@ class HighTable extends React.Component {
       {
         title: '生日',
         dataIndex: 'birthday',
-        width:120,
+        width: 120,
       },
       {
         title: '地址',
         dataIndex: 'address',
-        width:150,
-        fixed:'right',
+        width: 150,
+        fixed: 'right',
       },
     ];
 
@@ -160,17 +160,17 @@ class HighTable extends React.Component {
       {
         title: '序号',
         dataIndex: 'id',
-        width:70,
+        width: 70,
       },
       {
         title: '姓名',
         dataIndex: 'name',
-        width:70,
+        width: 70,
       },
       {
         title: '性别',
         dataIndex: 'sex',
-        width:70,
+        width: 70,
         render(sex) {
           let config = {
             '1': '男',
@@ -182,7 +182,7 @@ class HighTable extends React.Component {
       {
         title: '状态',
         dataIndex: 'state',
-        width:70,
+        width: 70,
         render(state) {
           let config = {
             '1': '悲伤',
@@ -197,7 +197,7 @@ class HighTable extends React.Component {
       {
         title: '爱好',
         dataIndex: 'hobby',
-        width:90,
+        width: 90,
         render(hobby) {
           let config = {
             '1': '打篮球',
@@ -212,12 +212,12 @@ class HighTable extends React.Component {
       {
         title: '生日',
         dataIndex: 'birthday',
-        width:100,
+        width: 100,
       },
       {
         title: '地址',
         dataIndex: 'address',
-        width:100,
+        width: 100,
       },
     ];
 
@@ -352,7 +352,7 @@ class HighTable extends React.Component {
             bordered
             columns={columns2}
             dataSource={this.state.dataSource}
-            scroll={{x:1100}}
+            scroll={{ x: 1100 }}
           />
         </Card>
         <Card title='表格纵向滚动'>
@@ -360,7 +360,7 @@ class HighTable extends React.Component {
             bordered
             columns={columns3}
             dataSource={this.state.dataSource}
-            scroll={{y:240}}
+            scroll={{ y: 240 }}
           />
         </Card>
         <Card title='表格排序和微标数'>

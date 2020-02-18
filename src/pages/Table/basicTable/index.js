@@ -92,7 +92,7 @@ class TableBasic extends React.Component {
   handleSorter = (pagination, filters, sorter) => {
     console.log(sorter)
     this.setState({
-      sortOrder: sorter.order 
+      sortOrder: sorter.order
       //sorter.order 排序有ascend（升序），discend（降序）和默认排序
     })
   }

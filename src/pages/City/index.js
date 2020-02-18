@@ -1,7 +1,29 @@
 import React from 'react'
 import './index.less'
+import axios from './../../axios'
 import { Card, Form, Input, Select, Button, Table } from 'antd'
 class City extends React.Component {
+  state = {}
+  componentDidMount() {
+    this.requestList()
+  }
+  requestList = () => {
+    axios.ajax({
+      url: 'table/open_city',
+      data: {
+        param: {
+          page: 1
+        }
+      }
+    }).then((res) => {
+      this.setState({
+        list: res.city_list.map((item, index) => {
+          item.key = index;
+          return item
+        })
+      })
+    })
+  }
   render() {
     const { getFieldDecorator } = this.props.form;
     const { Option } = Select;
@@ -18,7 +40,7 @@ class City extends React.Component {
       },
       {
         title: '用车模式',
-        dataIndex: 'carModel',
+        dataIndex: 'carModal',
         key: 'carModal',
       },
       {
@@ -35,11 +57,11 @@ class City extends React.Component {
         title: '城市管理员',
         dataIndex: 'manager',
         key: 'manager',
-      },
-      {
-        title: '城市开通时间',
-        dataIndex: 'openTime',
-        key: 'openTime',
+        render(manager) {
+          return manager.map((item) => {
+            return item.name
+          }).join('|')
+        }
       },
       {
         title: '操作时间',
@@ -51,6 +73,12 @@ class City extends React.Component {
         dataIndex: 'operator',
         key: 'operator',
       },
+      {
+        title: '城市开通时间',
+        dataIndex: 'openTime',
+        key: 'openTime',
+      },
+
     ];
     return (
       <div>
@@ -60,7 +88,7 @@ class City extends React.Component {
               {getFieldDecorator('city', {
                 initialValue: '全部'
               })(
-                <Select style={{width:90}}>
+                <Select style={{ width: 90 }}>
                   <Option value='1'>北京</Option>
                   <Option value='2'>上海</Option>
                   <Option value='3'>广州</Option>
@@ -72,7 +100,7 @@ class City extends React.Component {
               {getFieldDecorator('carModel', {
                 initialValue: '全部'
               })(
-                <Select style={{width:150}}>
+                <Select style={{ width: 150 }}>
                   <Option value='1'>自营</Option>
                   <Option value='2'>出租</Option>
                 </Select>
@@ -82,7 +110,7 @@ class City extends React.Component {
               {getFieldDecorator('OperatingModel', {
                 initialValue: '全部'
               })(
-                <Select style={{width:80}}>
+                <Select style={{ width: 80 }}>
                   <Option value='1'>北京</Option>
                   <Option value='2'>上海</Option>
                   <Option value='3'>广州</Option>
@@ -94,7 +122,7 @@ class City extends React.Component {
               {getFieldDecorator('state', {
                 initialValue: '全部'
               })(
-                <Select style={{width:80}}>
+                <Select style={{ width: 80 }}>
                   <Option value='1'>北京</Option>
                   <Option value='2'>上海</Option>
                   <Option value='3'>广州</Option>
@@ -103,14 +131,16 @@ class City extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-                <Button type='primary' style={{margin:'0 20px 0 30px'}}>查询</Button>
-                <Button>重置</Button>
+              <Button type='primary' style={{ margin: '0 20px 0 30px' }}>查询</Button>
+              <Button>重置</Button>
             </Form.Item>
           </Form>
         </Card>
         <Card title={<Button type='primary'>开通城市</Button>}>
           <Table
-          columns={columns}
+            columns={columns}
+            dataSource={this.state.list}
+            bordered
           />
         </Card>
       </div>
