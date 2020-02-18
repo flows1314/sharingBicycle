@@ -1,20 +1,65 @@
 import React from 'react'
 import './style.less'
 import moment from 'moment'
-import { Card, Form, Input, Radio, InputNumber, Select, Switch, DatePicker, Upload, TimePicker } from 'antd'
-const TextArea = Input.TextArea
+import { Card, Form, Input, Radio, InputNumber, Select, Switch, DatePicker, Upload, TimePicker, Icon, Checkbox, Button } from 'antd'
 
 class Register extends React.Component {
+  state = {
+    loading: false,
+  };
+
+  handleRegister = () => {
+    let formValues = this.props.form.getFieldsValue()
+    console.log(formValues)
+  }
+
+  getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  }
+  handleChange = info => {
+    if (info.file.status === 'uploading') {
+      this.setState({ loading: true });
+      return;
+    }
+    if (info.file.status === 'done') {
+      // Get this url from response in real world.
+      this.getBase64(info.file.originFileObj, imageUrl =>
+        this.setState({
+          imageUrl,
+          loading: false,
+        }),
+      );
+    }
+  };
   render() {
     const { getFieldDecorator } = this.props.form;
+    const TextArea = Input.TextArea;
+    const uploadButton = (
+      <div>
+        <Icon type={this.state.loading ? 'loading' : 'plus'} />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
     const formItemLayout = {
       labelCol: {
-        xs: { span: 24 },
-        sm: { span: 4 }
+        xs: 24,
+        sm: 4
       },
       wrapperCol: {
         xs: { span: 24 },
         sm: { span: 12 }
+      }
+    }
+
+    const offsetLayout = {
+      wrapperCol: {
+        xs: 24,
+        sm: {
+          span: 12,
+          offset: 4
+        }
       }
     }
     return (
@@ -105,9 +150,32 @@ class Register extends React.Component {
                 <TimePicker />
               )}
             </Form.Item>
+            <Form.Item label='头像上传' {...formItemLayout}>
+              {getFieldDecorator('img')(
+                <Upload
+                  listType="picture-card"
+                  showUploadList={false}
+                  action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                  onChange={this.handleChange}
+                >
+                  {this.state.imageUrl ? <img src={this.state.imageUrl} style={{ width: 102 }} /> : uploadButton}
+                </Upload>
+              )}
+            </Form.Item>
+            <Form.Item {...offsetLayout}>
+              {getFieldDecorator('agreement', {
+                valuePropName: 'checked',
+                initialValue: true,
+              })(
+                <Checkbox>我已阅读过<a href="#">慕课协议</a></Checkbox>
+              )}
+            </Form.Item>
+            <Form.Item {...offsetLayout}>
+              <Button type='primary' onClick={this.handleRegister}>注册</Button>
+            </Form.Item>
           </Form>
         </Card>
-      </div>
+      </div >
     )
   }
 }

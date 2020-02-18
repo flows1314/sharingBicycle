@@ -1,11 +1,15 @@
 import React from 'react'
 import './style.less'
-import { Card, Form, Input, Button, Icon, Checkbox } from 'antd'
+import { Card, Form, Input, Button, Icon, Checkbox, message } from 'antd'
 class Log extends React.Component {
-  handleSumbit = (e) => {
-    console.log(e)
-  }
+  handleSumbit = () => {
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        message.info(`你的用户名${values.user_name},密码是${values.pwd}`)
+      }
+    })
 
+  }
   render() {
     const { getFieldDecorator } = this.props.form
     return (
@@ -66,7 +70,7 @@ class Log extends React.Component {
                 rules: [{ required: true, message: '请输入你的密码！' }]
               })(<Checkbox>记住密码</Checkbox>)}
               <a href='#' className='card-forget'>忘记密码</a>
-              <Button type='primary' htmlType="submit" className='card-button'>登录</Button>
+              <Button type='primary' onClick={this.handleSumbit} className='card-button'>登录</Button>
             </Form.Item>
           </Form>
         </Card>
