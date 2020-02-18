@@ -71,7 +71,7 @@ const meunList = [
   },
   {
     title: '城市管理',
-    key: '/admin/csgl'
+    key: '/admin/city'
   },
   {
     title: '员工管理',

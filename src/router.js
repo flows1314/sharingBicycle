@@ -15,6 +15,7 @@ import Tabs from './pages/Tabs';
 import Carousel from './pages/Carousel';
 import Log from './pages/Form/log';
 import Register from './pages/Form/reg';
+import City from './pages/City';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 class Router extends React.Component {
   render() {
@@ -38,6 +39,7 @@ class Router extends React.Component {
                 <Route path='/admin/form/register' component={Register}></Route>
                 <Route path='/admin/table/basic' component={TableBasic}></Route>
                 <Route path='/admin/table/high' component={HighTable}></Route>
+                <Route path='/admin/city' component={City}></Route>
 
               </Admin>}>
             </Route>
