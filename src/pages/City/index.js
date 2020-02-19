@@ -115,6 +115,8 @@ class City extends React.Component {
         </Card>
         <Modal
           title='开通城市'
+          okText='提交'
+          cancelText='取消'
           visible={this.state.showOpen}
           onCancel={() => { this.setState({ showOpen: false }) }}
           onOk={this.handleSubmit}
