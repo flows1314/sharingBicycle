@@ -13,9 +13,10 @@ class Header extends React.Component {
     }
   }
   //因为sysTime每一秒更改一次，因此，必须声明state,如果只变化一次无需申明state
+  //getTime() 方法可返回距 1970 年 1 月 1 日之间的毫秒数。即转换成时间戳
   componentWillMount() {
     setInterval(() => {
-      let sysTime = util.formateDate()
+      let sysTime = util.formateDate(new Date().getTime())
       this.setState({
         sysTime
       })

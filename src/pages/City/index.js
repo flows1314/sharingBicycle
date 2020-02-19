@@ -1,9 +1,13 @@
 import React from 'react'
 import './index.less'
 import axios from './../../axios'
+import utils from '../../utils/utils'
 import { Card, Form, Select, Button, Table, Modal, Radio, message } from 'antd'
 class City extends React.Component {
   state = {}
+  params = {
+    page: 1
+  }
   componentDidMount() {
     this.requestList()
   }
@@ -22,17 +26,19 @@ class City extends React.Component {
       }
     })
   }
+
   handleOpen = () => {
     this.setState({
       showOpen: true
     })
   }
+
   requestList = () => {
     axios.ajax({
       url: 'table/open_city',
       data: {
-        param: {
-          page: 1
+        params: {
+          page: this.params.page
         }
       }
     }).then((res) => {
@@ -40,8 +46,13 @@ class City extends React.Component {
         list: res.city_list.map((item, index) => {
           item.key = index;
           return item
+        }),
+        pagination: utils.pagination(res, (current) => {
+
+          this.params.page = current;
+          this.requestList()
         })
-      })
+      });
     })
   }
   render() {
@@ -111,6 +122,7 @@ class City extends React.Component {
             columns={columns}
             dataSource={this.state.list}
             bordered
+            pagination={this.state.pagination}
           />
         </Card>
         <Modal
