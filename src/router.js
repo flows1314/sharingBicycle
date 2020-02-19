@@ -1,4 +1,5 @@
 import React from 'react';
+import NoFound from './pages/Nofound'
 import App from './app';
 import Admin from './admin';
 import Home from './pages/Home';
@@ -22,10 +23,10 @@ class Router extends React.Component {
     return (
       <HashRouter>
         <App>
-          <Switch>
-            <Route path='/login' component={Login}></Route>
-            <Route path='/admin' render={
-              () => <Admin>
+          <Route path='/login' component={Login}></Route>
+          <Route path='/admin' render={
+            () => <Admin>
+              <Switch>
                 <Route path='/admin/home' component={Home}></Route>
                 <Route path='/admin/ui/buttons' component={Buttons}></Route>
                 <Route path='/admin/ui/loading' component={Loading}></Route>
@@ -40,10 +41,10 @@ class Router extends React.Component {
                 <Route path='/admin/table/basic' component={TableBasic}></Route>
                 <Route path='/admin/table/high' component={HighTable}></Route>
                 <Route path='/admin/city' component={City}></Route>
-
-              </Admin>}>
-            </Route>
-          </Switch>
+                <Route component={NoFound}></Route>
+              </Switch>
+            </Admin>}>
+          </Route>
         </App>
       </HashRouter>
     )

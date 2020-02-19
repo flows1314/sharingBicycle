@@ -27,7 +27,7 @@ class Modals extends React.Component {
   render() {
     return (
       <div>
-        <Card className='card-wrap'
+        <Card className='cardWrapper'
           title='基础模态框'
         >
           <Button type='primary' onClick={() => this.handleOpen('showModal')}>OPen</Button>
@@ -92,8 +92,9 @@ class Modals extends React.Component {
         >
           <p>欢迎学习慕课新推出的React高级课程</p>
         </Modal>
+       
 
-        <Card className='card-wrap'
+        <Card className='cardWrapper'
           title='信息确认框'
         >
           <Button type='primary' onClick={() => this.handleModal('confirm')}>confirm</Button>
@@ -101,7 +102,7 @@ class Modals extends React.Component {
           <Button type='danger' onClick={() => this.handleModal('success')}>success</Button>
           <Button type='link' onClick={() => this.handleModal('warning')}>warning</Button>
           <Button type='primary' onClick={() => this.handleModal('error')}>error</Button>
-        </Card>
+        </Card> 
       </div>
     )
   } type = 'primary'
