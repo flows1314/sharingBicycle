@@ -36,7 +36,7 @@ class NavLeft extends React.Component {
       <div>
         <div className='left-log'>
           <img src='/assets/logo-ant.svg' alt='' />
-          <h1>imock系统</h1>
+          <h1>IMooc管理系统</h1>
         </div>
         <Menu
           theme='dark' mode="vertical" >

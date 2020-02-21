@@ -14,7 +14,7 @@ class Log extends React.Component {
     const { getFieldDecorator } = this.props.form
     return (
       <div>
-        <Card title='登录行内表单' className='card-wrap'>
+        <Card title='登录行内表单' className='card-wraps'>
           <Form layout='inline'>
             <Form.Item>
               {getFieldDecorator('username', {
@@ -39,7 +39,7 @@ class Log extends React.Component {
           </Form>
         </Card>
 
-        <Card title='登录水平表单' className='card-wrap'>
+        <Card title='登录水平表单' className='card-wraps'>
           <Form layout='horizontal' className='form-login'>
             <Form.Item>
               {getFieldDecorator('user_name', {

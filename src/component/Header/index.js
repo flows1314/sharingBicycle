@@ -39,22 +39,41 @@ class Header extends React.Component {
   }
 
   render() {
+    const meunType = this.props.meunType
     return (
       <div className='header'>
         <Row className='header-top'>
-          <span>欢迎，河畔一脚</span>
-          <a href='#'>退出</a>
+          {
+            meunType ?
+              <div  className='meun_nav'>
+                <Col span={5}>
+                  <img src='./assets/logo-ant.svg' />
+                  <span className='span_title'>IMooc通用管理系统</span>
+                </Col>
+                <Col span={19}>
+                  <span>欢迎，河畔一脚</span>
+                  <a href='#'>退出</a>
+                </Col>
+              </div>
+              : <Col span={24}>
+                <span>欢迎，河畔一脚</span>
+                <a href='#'>退出</a>
+              </Col>
+          }
         </Row>
-        <Row className='breadcrumb'>
-          <Col className='breadcrumb-title' span={4}>
-            {this.state.topic}
-          </Col>
-          <Col className='breadcrumb-time-weather' span={20}>
-            <span>{this.state.sysTime}</span>
-            <img src={this.state.weatherPicture} />
-            <span>{this.state.weather}</span>
-          </Col>
-        </Row>
+        {
+          meunType ? '' :
+            <Row className='breadcrumb'>
+              <Col className='breadcrumb-title' span={4}>
+                {this.state.topic}
+              </Col>
+              <Col className='breadcrumb-time-weather' span={20}>
+                <span>{this.state.sysTime}</span>
+                <img src={this.state.weatherPicture} />
+                <span>{this.state.weather}</span>
+              </Col>
+            </Row>
+        }
       </div>
     )
   }

@@ -64,7 +64,7 @@ class Register extends React.Component {
     }
     return (
       <div>
-        <Card title='注册表单' className='card-wrap'>
+        <Card title='注册表单' className='card-wraps'>
           <Form layout='horizontal'>
             <Form.Item label='用户名' {...formItemLayout}>
               {getFieldDecorator('username', {

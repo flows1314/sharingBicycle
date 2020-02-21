@@ -1,5 +1,4 @@
 import React from 'react'
-import './index.less'
 import { Card,Spin, Icon, Alert } from 'antd'
 
 class Loading extends React.Component {
@@ -7,14 +6,14 @@ class Loading extends React.Component {
     const icon=<Icon type='loading'/>
     return(
       <div>
-        <Card title='Spin用法' className='card-wrap'>
+        <Card title='Spin用法'>
           <Spin size='small' />
           <Spin size='default' style={{margin:'0 10px'}}/>
           <Spin size='large'/>
           <Spin indicator={icon}/>
           <Spin indicator={icon} spinning={false}/>
        </Card>
-       <Card title='内容遮罩' className='card-wrap'>
+       <Card title='内容遮罩'>
        <Alert
             style={{marginBottom:9}}
             message="React"

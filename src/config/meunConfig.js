@@ -74,8 +74,8 @@ const meunList = [
     key: '/admin/city'
   },
   {
-    title: '员工管理',
-    key: '/admin/yggl'
+    title: '订单管理',
+    key: '/admin/order'
   },
   {
     title: '图标',
@@ -100,7 +100,7 @@ const meunList = [
     key: '/admin/qxsz'
   },
   {
-    title: '订单管理',
+    title: '员工管理',
     key: '/admin/ddgl'
   },
   {

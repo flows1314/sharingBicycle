@@ -17,6 +17,9 @@ import Carousel from './pages/Carousel';
 import Log from './pages/Form/log';
 import Register from './pages/Form/reg';
 import City from './pages/City';
+import Order from './pages/order';
+import OrderDetail from './pages/order/detail';
+import Common from './common'
 import { HashRouter, Route, Switch } from 'react-router-dom';
 class Router extends React.Component {
   render() {
@@ -41,9 +44,16 @@ class Router extends React.Component {
                 <Route path='/admin/table/basic' component={TableBasic}></Route>
                 <Route path='/admin/table/high' component={HighTable}></Route>
                 <Route path='/admin/city' component={City}></Route>
+                <Route path='/admin/order' component={Order}></Route>
                 <Route component={NoFound}></Route>
               </Switch>
             </Admin>}>
+          </Route>
+          <Route path='/commom' render={() =>
+            <Common>
+              <Route path='./common/order/detail:orderID' component={Common}></Route>
+            </Common>
+          }>
           </Route>
         </App>
       </HashRouter>

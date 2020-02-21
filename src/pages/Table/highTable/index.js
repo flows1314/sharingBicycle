@@ -341,7 +341,7 @@ class HighTable extends React.Component {
       },
       {
         title: '操作',
-        render: (item) => <Button onClick={() => this.handleDelete(item)}>删除</Button>
+        render: (item) => <Button type='danger' onClick={() => this.handleDelete(item)}>删除</Button>
 
       },
     ];
