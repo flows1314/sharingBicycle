@@ -18,8 +18,8 @@ import Log from './pages/Form/log';
 import Register from './pages/Form/reg';
 import City from './pages/City';
 import Order from './pages/order';
-import OrderDetail from './pages/order/detail';
-import Common from './common'
+import Detail from './pages/order/detail';
+import Common from './common';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 class Router extends React.Component {
   render() {
@@ -49,11 +49,10 @@ class Router extends React.Component {
               </Switch>
             </Admin>}>
           </Route>
-          <Route path='/commom' render={() =>
+          <Route path='/common' render={() =>
             <Common>
-              <Route path='./common/order/detail:orderID' component={Common}></Route>
-            </Common>
-          }>
+                <Route path='/common/order/detail/:orderID' component={Detail}></Route>
+            </Common>}>
           </Route>
         </App>
       </HashRouter>

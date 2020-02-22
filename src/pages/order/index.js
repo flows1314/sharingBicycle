@@ -52,13 +52,13 @@ class Order extends React.Component {
     let selectedItem = this.state.selectedItem;
     console.log(selectedItem)
     if (!selectedItem) {
-      Modal.info({
-        title: '订单详情',
-        content: '请选择一条订单信息！'
+      Modal.warning({
+        title: '订单详情提示',
+        content: '请先选择一条订单信息！'
       })
       return;
     }
-    window.open(`/#/commom/order/detail${selectedItem.id}`, '_black')
+    window.open(`/#/common/order/detail/${selectedItem.id}`, '_black')
   }
 
   render() {

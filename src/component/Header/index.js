@@ -45,21 +45,16 @@ class Header extends React.Component {
         <Row className='header-top'>
           {
             meunType ?
-              <div  className='meun_nav'>
-                <Col span={5}>
-                  <img src='./assets/logo-ant.svg' />
-                  <span className='span_title'>IMooc通用管理系统</span>
-                </Col>
-                <Col span={19}>
-                  <span>欢迎，河畔一脚</span>
-                  <a href='#'>退出</a>
-                </Col>
-              </div>
-              : <Col span={24}>
-                <span>欢迎，河畔一脚</span>
-                <a href='#'>退出</a>
+              <Col span={5}>
+                <img src='./assets/logo-ant.svg' />
+                <span className='span_title'>IMooc通用管理系统</span>
               </Col>
+              : ''
           }
+          <Col span={meunType ?19:24}>
+            <span>欢迎，河畔一脚</span>
+            <a href='#'>退出</a>
+          </Col>
         </Row>
         {
           meunType ? '' :

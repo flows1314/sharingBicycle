@@ -1,15 +1,16 @@
 import React from 'react';
-import './style.less';
-import { Row, Col } from 'antd';
+import './component/Header/index.less'
+import { Row, Col} from 'antd';
 import Header from './component/Header';
 class Common extends React.Component {
     render() {
         return (
-            <div>
-                <Row className='container'>
+            <div className='common'>
+                <Row className='header-top'>
                     <Header meunType='second'/>
                 </Row>
-                <Row className='content'>
+                <Row className='detail-content'>
+                    {/* {console.log(this)} */}
                     {this.props.children}
                 </Row>
             </div>
