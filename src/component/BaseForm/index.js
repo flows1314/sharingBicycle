@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from './../../axios'
-import { Form, Select, Button, DatePicker } from 'antd'
+import { Form, Select, Button, DatePicker, Input } from 'antd'
 
 class BaseForm extends React.Component {
   handleFilterSubmit = () => {
@@ -41,6 +41,17 @@ class BaseForm extends React.Component {
           list.push(select)
         }
 
+        if (type == 'Input') {
+          const input = <Form.Item label={label}>
+            {getFieldDecorator([field], {
+              initialValue: initialValue
+            })(
+              <Input type='text' placeholder={placeholder} style={{ width: width }} />
+            )}
+          </Form.Item>
+          list.push(input)
+        }
+
         if (type == 'DatePicker') {
           const start_time = <Form.Item label={label}>
             {getFieldDecorator('start_time')(
@@ -54,6 +65,15 @@ class BaseForm extends React.Component {
             )}
           </Form.Item>
           list.push(end_time)
+        }
+
+        if (type == 'Date') {
+          const data = <Form.Item label={label}>
+            {getFieldDecorator([field])(
+              <DatePicker placeholder={placeholder} showTime format="YYYY-MM-DD" />
+            )}
+          </Form.Item>
+          list.push(data)
         }
       })
       return list

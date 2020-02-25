@@ -78,6 +78,10 @@ const meunList = [
     key: '/admin/order'
   },
   {
+    title: '员工管理',
+    key: '/admin/user'
+  },
+  {
     title: '图标',
     key: '/admin/tb',
     children: [
@@ -98,10 +102,6 @@ const meunList = [
   {
     title: '权限设置',
     key: '/admin/qxsz'
-  },
-  {
-    title: '员工管理',
-    key: '/admin/ddgl'
   },
   {
     title: '富文本',

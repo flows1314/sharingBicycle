@@ -20,6 +20,7 @@ import City from './pages/City';
 import Order from './pages/order';
 import Detail from './pages/order/detail';
 import Common from './common';
+import User from './pages/User'
 import { HashRouter, Route, Switch } from 'react-router-dom';
 class Router extends React.Component {
   render() {
@@ -45,6 +46,7 @@ class Router extends React.Component {
                 <Route path='/admin/table/high' component={HighTable}></Route>
                 <Route path='/admin/city' component={City}></Route>
                 <Route path='/admin/order' component={Order}></Route>
+                <Route path='/admin/user' component={User}></Route>
                 <Route component={NoFound}></Route>
               </Switch>
             </Admin>}>
