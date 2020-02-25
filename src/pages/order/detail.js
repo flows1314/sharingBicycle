@@ -9,20 +9,85 @@ class Detail extends React.Component {
         this.requestDetial()
     }
 
-    bMap = () => {
-        this.map = new window.BMap.Map("map");
+    bMap = (res) => {
         // 创建地图实例  
-        // var point = new window.BMap.Point(116.404, 39.915);
+        this.map = new window.BMap.Map("map");
         // 创建点坐标  
-        this.map.centerAndZoom('武汉', 15);
+        // var point = new window.BMap.Point(116.404, 39.915);
         // 初始化地图，设置中心点坐标和地图级别 
-        this.addControl()
+        // this.map.centerAndZoom('北京', 11);
+        //添加地图控件
+        this.addControl();
+        //绘制用户行驶路线
+        this.drawBikeRoute(res);
+        //绘制服务区地图
+        this.drawServiceArea(res)
     }
 
+    //添加地图控件方法
     addControl = () => {
         this.map.addControl(new window.BMap.NavigationControl({ anchor: window.BMAP_ANCHOR_TOP_RIGHT }));
         this.map.addControl(new window.BMap.ScaleControl({ anchor: window.BMAP_ANCHOR_TOP_RIGHT }));
         this.map.addControl(new window.BMap.OverviewMapControl({ anchor: window.BMAP_ANCHOR_TOP_LEFT }));
+    }
+
+    //绘制用户行驶路线
+    drawBikeRoute = (res) => {
+        let startPoint = '';
+        let endPoint = '';
+        if (res.position_list.length > 0) {
+            //创建起始点
+            let arr_start = res.position_list[0].p1
+            startPoint = new window.BMap.Point(arr_start.lat, arr_start.lon);
+            let startIcon = new window.BMap.Icon('/assets/start_point.png', new window.BMap.Size(36, 42), {
+                imageSize: new window.BMap.Size(36, 42),
+                anchor: new window.BMap.Size(36, 42)
+            });
+            // 创建标注对象并添加到地图 
+            let startMarker = new window.BMap.Marker(startPoint, { icon: startIcon });
+            this.map.addOverlay(startMarker);
+
+            //创建结束点
+            let arr_end = res.position_list[0].p10
+            endPoint = new window.BMap.Point(arr_end.lat, arr_end.lon);
+            let endIcon = new window.BMap.Icon('/assets/end_point.png', new window.BMap.Size(36, 42), {
+                imageSize: new window.BMap.Size(36, 42),
+                anchor: new window.BMap.Size(36, 42)
+            });
+            let endMarker = new window.BMap.Marker(endPoint, { icon: endIcon });
+            this.map.addOverlay(endMarker);
+        }
+        let trackPoint = [];
+        for (var i = 0; i < Object.keys(res.position_list[0]).length; i++) {
+            let itemPoint = res.position_list[0][`p${i + 1}`];
+            trackPoint.push(new window.BMap.Point(itemPoint.lat, itemPoint.lon))
+        };
+        let polyline = new window.BMap.Polyline(trackPoint, {
+            strokeColor: 'black',
+            strokeWeight: 2,
+            strokeOpacity: 1
+        })
+        this.map.addOverlay(polyline);
+        this.map.centerAndZoom(endPoint, 15);
+
+
+    }
+
+    //绘制服务区地图
+    drawServiceArea = (res) => {
+        let trackPoint = [];
+        for (let i = 0; i < Object.keys(res.arean_list[0]).length; i++) {
+            let itemPoint = res.arean_list[0][`0${i + 1}`];
+            trackPoint.push(new window.BMap.Point(itemPoint.lat, itemPoint.lon));
+        };
+        let polygon = new window.BMap.Polygon(trackPoint, {
+            strokeColor: '#CE0000',
+            strokeWeight: 2,
+            strokeOpacity: 1,
+            fillColor: '#ff8605',
+            fillOpacity: 0.4
+        })
+        this.map.addOverlay(polygon);
     }
 
     requestDetial = () => {
@@ -39,7 +104,7 @@ class Detail extends React.Component {
                         detail: res.item[0]
                     })
                 }
-                this.bMap()
+                this.bMap(res)
             })
         }
     }
