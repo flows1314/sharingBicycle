@@ -2,7 +2,7 @@ import React from 'react'
 import axios from '../../axios'
 import Utils from '../../utils/utils'
 import BaseForm from '../../component/BaseForm'
-import { Card, Form, Button, Table, Modal,message} from 'antd'
+import { Card, Form, Button, Table, Modal, message } from 'antd'
 class Order extends React.Component {
   state = {
     isVisible: false,
@@ -30,7 +30,7 @@ class Order extends React.Component {
 
   requestList = () => {
     //封装的列表
-    axios.requestList(this,'order/list',this.params,true) //isMock参数如果没有默认false
+    axios.requestList(this, 'order/list', this.params, true) //isMock参数如果没有默认false
   }
 
   handleOrderDetail = () => {
@@ -93,8 +93,6 @@ class Order extends React.Component {
         this.requestList()
       }
     })
-
-
   }
 
   render() {

@@ -48,7 +48,6 @@ class City extends React.Component {
           return item
         }),
         pagination: utils.pagination(res, (current) => {
-
           this.params.page = current;
           this.requestList()
         })

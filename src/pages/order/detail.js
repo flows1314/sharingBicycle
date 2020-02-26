@@ -11,7 +11,7 @@ class Detail extends React.Component {
 
     bMap = (res) => {
         // 创建地图实例  
-        this.map = new window.BMap.Map("map");
+        this.map = new window.BMap.Map("BMap");
         // 创建点坐标  
         // var point = new window.BMap.Point(116.404, 39.915);
         // 初始化地图，设置中心点坐标和地图级别 
@@ -114,7 +114,7 @@ class Detail extends React.Component {
         return (
             <div className='detail'>
                 <Card className='content'>
-                    <div id='map' className='map'></div>
+                    <div id='BMap' className='map'></div>
                     <div className='basicMessage'>基础信息</div>
                     <div className='messageList'>
                         <ul>
