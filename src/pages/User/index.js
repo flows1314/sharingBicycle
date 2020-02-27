@@ -4,6 +4,7 @@ import BaseForm from '../../component/BaseForm'
 import { Card, Table, Button, Icon, Modal, Form, Input, Radio, Select, DatePicker, message } from 'antd'
 import axios from '../../axios'
 import utils from '../../utils/utils'
+import moment from 'moment'
 class User extends React.Component {
     state = {
         isVisible: false
@@ -53,7 +54,10 @@ class User extends React.Component {
             .then((data) => {
                 if (data.code == 0) {
                     this.setState({
-                        isVisible: false
+                        isVisible: false,
+                        selectedRowKeys: '',
+                        selectedRows: '',
+                        item: ''
                     });
                     message.success(data.result);
                     this.formItem.props.form.resetFields();
@@ -64,15 +68,66 @@ class User extends React.Component {
 
     //功能区
     handleOperate = (type) => {
+        let _this=this;
+        const selectedItem = this.state.selectedRows;
         if (type == 'create') {
             this.setState({
                 isVisible: true,
-                title: '创建员工'
+                title: '创建员工',
+                type
+            })
+        } else if (type == 'edit' || type == 'detail') {
+            if (!selectedItem) {
+                Modal.warning({ title: type == 'edit' ? '编辑提示' : '详情提示', content: '请先选择一条信息' });
+                return;
+            }
+            this.setState({
+                type,
+                isVisible: true,
+                title: type == 'edit' ? '员工编辑' : '员工详情',
+                item: selectedItem
+            });
+        } else {
+            if (!selectedItem) {
+                Modal.warning({ title: '删除提示', content: '请先选择一条删除信息' });
+                return;
+            }
+            Modal.confirm({
+                title: '删除提示',
+                content: '你确定要删除该员工信息?',
+                okText: '删了，不需要它',
+                cancelText: '还是留着吧',
+                onCancel: () => { this.setState({ selectedRowKeys: '', selectedRows: '', item: '' }) },
+                onOk: () => {
+                    let formItemValues = this.state.selectedRows;
+                    this.params = formItemValues.id;
+                    axios.ajax({ url: 'user/delete', data: { params:{id:this.params}} })
+                        .then((data) => {
+                            if (data.code == 0) {
+                                this.setState({
+                                    isVisible: false,
+                                    selectedRowKeys: '',
+                                    selectedRows: '',
+                                    item: ''
+                                });
+                                message.success(data.result);
+                                // this.formItem.props.form.resetFields();
+                                this.requestTableList();
+                            }
+                        })
+                }
             })
         }
     }
 
     render() {
+        let footer={};
+        if(this.state.type=='detail'){
+            footer={
+                footer:null
+            }
+        }
+        
         const columns = [
             {
                 title: 'id',
@@ -120,7 +175,17 @@ class User extends React.Component {
                 title: '早起时间',
                 dataIndex: 'uptime'
             },
-        ]
+        ];
+
+        //表格行是否可选择属性配置
+        const rowSelection = {
+            type: 'radio',
+            selectedRowKeys: this.state.selectedRowKeys,
+            onChange: (selectedRowKeys, selectedRows) => {
+                this.setState({ selectedRowKeys, selectedRows: selectedRows[0] });
+            }
+        }
+
         const formList = [
             {
                 type: 'Input',
@@ -157,17 +222,31 @@ class User extends React.Component {
                     columns={columns}
                     dataSource={this.state.list}
                     pagination={this.state.pagination}
+                    rowSelection={rowSelection}
+                    onRow={(record, index) => {
+                        return {
+                            onClick: () => {
+                                this.setState({
+                                    selectedRows: [record][0],
+                                    selectedRowKeys: [index]
+                                })
+                            }
+                        }
+
+                    }}
+
                 />
                 <Modal
                     title={this.state.title}
                     visible={this.state.isVisible}
+                    {...footer}
                     onOk={this.handleSumbit}
                     onCancel={() => {
-                        this.setState({ isVisible: false });
-                        this.formItem.props.form.resetFields();
+                        this.setState({ isVisible: false, selectedRowKeys: '', selectedRows: '', item: '' });
+                        // this.formItem.props.form.resetFields();
                     }}
                 >
-                    <Domains wrappedComponentRef={(inst) => this.formItem = inst} />
+                    <Domains type={this.state.type} item={this.state.item} wrappedComponentRef={(inst) => this.formItem = inst} />
                 </Modal>
             </div>
         )
@@ -176,9 +255,20 @@ class User extends React.Component {
 export default User;
 
 class Domain extends React.Component {
+    getState = (state) => {
+        let config = {
+            '1': '北大才子',
+            '2': '风华浪子',
+            '3': '江南Style',
+            '4': '河畔一脚',
+        };
+        return config[state]
+    }
+
     render() {
         const Option = Select.Option;
         const TextArea = Input.TextArea;
+        const item = this.props.item || {}
         const { getFieldDecorator } = this.props.form;
         const formLayout = {
             labelCol: {
@@ -188,18 +278,23 @@ class Domain extends React.Component {
                 span: 13
             }
         }
+
         return (
             <Form {...formLayout}>
                 <Form.Item label='用户名'>
-                    {
-                        getFieldDecorator('userName')(
+                    {this.props.type == 'detail' ? item.name :
+                        getFieldDecorator('name', {
+                            initialValue: item.name    //空数组{}只能一层调用，
+                        })(                            //两层及以上报错。
                             <Input type='text' placeholder='请输入用户名' style={{ width: 195 }} />
                         )
                     }
                 </Form.Item>
                 <Form.Item label='性别'>
-                    {
-                        getFieldDecorator('sex')(
+                    {this.props.type == 'detail' ? item.sex == 1 ? '男' : '女' :
+                        getFieldDecorator('sex', {
+                            initialValue: item.sex
+                        })(
                             <Radio.Group>
                                 <Radio value={1}>男</Radio>
                                 <Radio value={2}>女</Radio>
@@ -208,8 +303,10 @@ class Domain extends React.Component {
                     }
                 </Form.Item>
                 <Form.Item label='状态'>
-                    {
-                        getFieldDecorator('state')(
+                    {this.props.type == 'detail' ? this.getState(item.state) :
+                        getFieldDecorator('state', {
+                            initialValue: item.state
+                        })(
                             <Select style={{ width: 195 }} placeholder='请选择你的状态'>
                                 <Option value={1}>北大才子</Option>
                                 <Option value={2}>风华浪子</Option>
@@ -220,15 +317,19 @@ class Domain extends React.Component {
                     }
                 </Form.Item>
                 <Form.Item label='生日'>
-                    {
-                        getFieldDecorator('birthday')(
+                    {this.props.type == 'detail' ? item.birthday :
+                        getFieldDecorator('birthday', {
+                            initialValue: moment(item.birthday)
+                        })(
                             <DatePicker showTime format='YYYY:MM:DD' style={{ width: 195 }} />
                         )
                     }
                 </Form.Item>
                 <Form.Item label='联系地址'>
-                    {
-                        getFieldDecorator('address')(
+                    {this.props.type == 'detail' ? item.address :
+                        getFieldDecorator('address', {
+                            initialValue: item.address
+                        })(
                             <TextArea placeholder='请输入联系地址' />
                         )
                     }
