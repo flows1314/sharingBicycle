@@ -62,7 +62,7 @@ export default class Axios {
             resolve(res);
           } else {
             Modal.info({
-              title: '提示',
+              title: '注意提示',
               content: res.msg
             })
           }

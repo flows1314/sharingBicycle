@@ -1,7 +1,7 @@
 import React from 'react'
 import './index.less'
 import BaseForm from '../../component/BaseForm'
-import { Card, Table, Button, Icon, Modal, Form, Input, Radio, Select, DatePicker, message } from 'antd'
+import { Card, Table, Button, Modal, Form, Input, Radio, Select, DatePicker, message } from 'antd'
 import axios from '../../axios'
 import utils from '../../utils/utils'
 import moment from 'moment'
@@ -68,7 +68,7 @@ class User extends React.Component {
 
     //功能区
     handleOperate = (type) => {
-        let _this=this;
+        let _this = this;
         const selectedItem = this.state.selectedRows;
         if (type == 'create') {
             this.setState({
@@ -101,7 +101,7 @@ class User extends React.Component {
                 onOk: () => {
                     let formItemValues = this.state.selectedRows;
                     this.params = formItemValues.id;
-                    axios.ajax({ url: 'user/delete', data: { params:{id:this.params}} })
+                    axios.ajax({ url: 'user/delete', data: { params: { id: this.params } } })
                         .then((data) => {
                             if (data.code == 0) {
                                 this.setState({
@@ -121,13 +121,13 @@ class User extends React.Component {
     }
 
     render() {
-        let footer={};
-        if(this.state.type=='detail'){
-            footer={
-                footer:null
+        let footer = {};
+        if (this.state.type == 'detail') {
+            footer = {
+                footer: null
             }
         }
-        
+
         const columns = [
             {
                 title: 'id',

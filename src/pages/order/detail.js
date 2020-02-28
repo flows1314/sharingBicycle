@@ -39,7 +39,7 @@ class Detail extends React.Component {
             //创建起始点
             let arr_start = res.position_list[0].p1
             startPoint = new window.BMap.Point(arr_start.lat, arr_start.lon);
-            let startIcon = new window.BMap.Icon('/assets/start_point.png', new window.BMap.Size(36, 42), {
+            let startIcon = new window.BMap.Icon('/assets/start_point.png', new window.BMap.Size(36, 42),{
                 imageSize: new window.BMap.Size(36, 42),
                 anchor: new window.BMap.Size(36, 42)
             });

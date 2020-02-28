@@ -82,6 +82,10 @@ const meunList = [
     key: '/admin/user'
   },
   {
+    title: '车辆地图',
+    key: '/admin/map'
+  },
+  {
     title: '图标',
     key: '/admin/tb',
     children: [
@@ -106,10 +110,6 @@ const meunList = [
   {
     title: '富文本',
     key: '/admin/kwb'
-  },
-  {
-    title: '车辆地图',
-    key: '/admin/cldt'
   },
 ]
 export default meunList;
