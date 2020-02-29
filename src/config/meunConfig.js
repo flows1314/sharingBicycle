@@ -87,19 +87,19 @@ const meunList = [
   },
   {
     title: '图标',
-    key: '/admin/tb',
+    key: '/admin/echarts',
     children: [
       {
         title: '柱形图',
-        key: '/admin/an'
+        key: '/admin/echarts/bar'
       },
       {
         title: '饼图',
-        key: '/admin/bt'
+        key: '/admin/echarts/pie'
       },
       {
         title: '折线图',
-        key: '/admin/zxt'
+        key: '/admin/echarts/line'
       },
     ]
   },

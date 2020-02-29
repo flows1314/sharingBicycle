@@ -41,7 +41,7 @@ class Detail extends React.Component {
             startPoint = new window.BMap.Point(arr_start.lat, arr_start.lon);
             let startIcon = new window.BMap.Icon('/assets/start_point.png', new window.BMap.Size(36, 42),{
                 imageSize: new window.BMap.Size(36, 42),
-                anchor: new window.BMap.Size(36, 42)
+                anchor: new window.BMap.Size(18, 42)
             });
             // 创建标注对象并添加到地图 
             let startMarker = new window.BMap.Marker(startPoint, { icon: startIcon });
@@ -52,7 +52,7 @@ class Detail extends React.Component {
             endPoint = new window.BMap.Point(arr_end.lat, arr_end.lon);
             let endIcon = new window.BMap.Icon('/assets/end_point.png', new window.BMap.Size(36, 42), {
                 imageSize: new window.BMap.Size(36, 42),
-                anchor: new window.BMap.Size(36, 42)
+                anchor: new window.BMap.Size(18, 42)
             });
             let endMarker = new window.BMap.Marker(endPoint, { icon: endIcon });
             this.map.addOverlay(endMarker);

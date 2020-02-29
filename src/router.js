@@ -22,6 +22,9 @@ import Detail from './pages/order/detail';
 import Common from './common';
 import User from './pages/User';
 import Map from './pages/Map';
+import Bar from './pages/Echarts/Bar';
+import Pie from './pages/Echarts/Pie';
+import Line from './pages/Echarts/Line';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 class Router extends React.Component {
   render() {
@@ -49,6 +52,9 @@ class Router extends React.Component {
                 <Route path='/admin/order' component={Order}></Route>
                 <Route path='/admin/user' component={User}></Route>
                 <Route path='/admin/map' component={Map}></Route>
+                <Route path='/admin/echarts/bar' component={Bar}></Route>
+                <Route path='/admin/echarts/pie' component={Pie}></Route>
+                <Route path='/admin/echarts/line' component={Line}></Route>
                 <Route component={NoFound}></Route>
               </Switch>
             </Admin>}>
