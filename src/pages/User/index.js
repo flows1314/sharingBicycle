@@ -7,7 +7,8 @@ import utils from '../../utils/utils'
 import moment from 'moment'
 class User extends React.Component {
     state = {
-        isVisible: false
+        isVisible: false,
+        list:''
     }
     params = {
         page: 1

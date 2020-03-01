@@ -70,6 +70,10 @@ const meunList = [
     ]
   },
   {
+    title: '富文本',
+    key: '/admin/rich'
+  },
+  {
     title: '城市管理',
     key: '/admin/city'
   },
@@ -105,11 +109,7 @@ const meunList = [
   },
   {
     title: '权限设置',
-    key: '/admin/qxsz'
-  },
-  {
-    title: '富文本',
-    key: '/admin/kwb'
+    key: '/admin/authority'
   },
 ]
 export default meunList;

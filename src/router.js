@@ -25,6 +25,8 @@ import Map from './pages/Map';
 import Bar from './pages/Echarts/Bar';
 import Pie from './pages/Echarts/Pie';
 import Line from './pages/Echarts/Line';
+import RichText from './pages/RichText';
+import Authority from './pages/Authority';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 class Router extends React.Component {
   render() {
@@ -55,6 +57,8 @@ class Router extends React.Component {
                 <Route path='/admin/echarts/bar' component={Bar}></Route>
                 <Route path='/admin/echarts/pie' component={Pie}></Route>
                 <Route path='/admin/echarts/line' component={Line}></Route>
+                <Route path='/admin/rich' component={RichText}></Route>
+                <Route path='/admin/authority' component={Authority}></Route>
                 <Route component={NoFound}></Route>
               </Switch>
             </Admin>}>
