@@ -14,9 +14,9 @@ class NavLeft extends React.Component {
   componentWillMount() {
     const meunTreeNode = this.renderMeun(meunList);
     //利用正则去除多余字符
-    let currentKey=window.location.hash.replace(/#|\?.*$/g,'');
+    let currentKey = window.location.hash.replace(/#|\?.*$/g, '');
     this.setState({
-      meunTreeNode,currentKey
+      meunTreeNode, currentKey
     })
   }
   //菜单渲染
@@ -41,13 +41,13 @@ class NavLeft extends React.Component {
           <h1>IMooc管理系统</h1>
         </div>
         <Menu
-          theme='dark' 
-          mode="vertical" 
+          theme='dark'
+          mode="vertical"
           selectedKeys={[this.state.currentKey]}
-          onClick={(item)=>{
-            this.setState({currentKey:item.key})
+          onClick={(item) => {
+            this.setState({ currentKey: item.key })
           }}
-          >
+        >
           {this.state.meunTreeNode}
         </Menu>
       </div>
