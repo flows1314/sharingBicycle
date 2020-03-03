@@ -2,7 +2,7 @@ import React from 'react'
 import axios from '../../axios'
 import utils from '../../utils/utils'
 import meun from '../../config/meunConfig'
-import { Card, Button, Modal, Table, Form, Input, Select, message, Tree } from 'antd'
+import { Card, Button, Modal, Table, Form, Input, Select, message, Tree, Transfer } from 'antd'
 class Authority extends React.Component {
     state = { visible: false }
     componentDidMount() {
@@ -91,10 +91,69 @@ class Authority extends React.Component {
                     message.success(res.result);
                     this.setState({ authority_visible: false, selectedRowKeys: '', selectedItem: '' })
                 }
+                this.requestList()
             })
-
+    }
+    //用户授权
+    handleUserAuthorization = () => {
+        let item = this.state.selectedItem;
+        if (!item) {
+            Modal.info({
+                title: '用户授权提示',
+                content: '请先选择授权用户！'
+            })
+            return;
+        }
+        this.setState({ userAuthorization_visible: true })
+        this.getUserAuthorizationData(item)
+    }
+    //获取权限用户数据
+    getUserAuthorizationData = (item) => {
+        axios.ajax({ url: 'authority/get', data: { params: { id: item.id } } })
+            .then((res) => {
+                if (res.code == 0) {
+                    this.getMock(res.result)
+                }
+            })
+    }
+    //权限用户分类
+    getMock = (data) => {
+        const targetKeys = [];
+        const mockData = [];
+        for (let i = 0; i < data.length; i++) {
+            const userData = {
+                key: data[i].user_id,
+                title: data[i].user_name,
+                status: data[i].status
+            }
+            if (userData.status == 1) {
+                targetKeys.push(userData.key)
+            }
+            mockData.push(userData)
+        }
+        // console.log(mockData, targetKeys )
+        this.setState({ mockData, targetKeys });
     }
 
+    //穿梭框两栏之间转移
+    getTarGetKeys = (targetKeys) => {
+        this.setState({ targetKeys })
+    }
+
+    //用户授权提交
+    handldSubmit = () => {
+        let data = [];
+        data.role_id = this.state.selectedItem.id;
+        data.user_id = this.state.targetKeys;
+        axios.ajax({ url: 'authority/user', data: { params: { ...data } } })
+            .then((res) => {
+                if (res) {
+                    this.setState({ userAuthorization_visible: false, selectedRowKeys: '', selectedItem: '' })
+                    message.success(res.result);
+                    this.requestList()
+                }
+            })
+    }
     render() {
         //表格标题
         const columns = [
@@ -148,7 +207,7 @@ class Authority extends React.Component {
                 <Card>
                     <Button type='primary' onClick={this.handleCreateRole} icon="plus" >创建角色</Button>
                     <Button type="primary" onClick={this.handleSetting} icon="setting" style={{ margin: "0 3px" }} >设置权限</Button>
-                    <Button type='primary' icon="user">用户授权</Button>
+                    <Button type='primary' onClick={this.handleUserAuthorization} icon="user">用户授权</Button>
                 </Card>
                 <Card>
                     <Table
@@ -184,6 +243,21 @@ class Authority extends React.Component {
                         item={this.state.selectedItem}
                         meunList={this.state.meunList}
                         getCheckedKeys={this.getCheckedKeys}
+                    />
+                </Modal>
+                <Modal
+                    title='用户授权'
+                    visible={this.state.userAuthorization_visible}
+                    onOk={this.handldSubmit}
+                    onCancel={() => {
+                        this.setState({ userAuthorization_visible: false, selectedRowKeys: '', selectedItem: '' });
+                    }}
+                >
+                    <FormUserAuthorization
+                        item={this.state.selectedItem}
+                        mockData={this.state.mockData}
+                        targetKeys={this.state.targetKeys}
+                        getTarGetKeys={this.getTarGetKeys}
                     />
                 </Modal>
             </div>
@@ -286,3 +360,44 @@ class Author extends React.Component {
     }
 }
 const FormAuthority = Form.create()(Author)
+
+//用户授权组件
+class UserAuthorization extends React.Component {
+    //两栏之间转移时的回调函
+    handleChange = (targetKeys) => {
+        this.props.getTarGetKeys(targetKeys)
+    }
+    render() {
+        const { roleName } = this.props.item;
+        const config = {
+            '1': '管理人员',
+            '2': '客服专员',
+            '3': '财务专员',
+            '4': '后勤人员',
+        }
+        const formLayout = {
+            labelCol: { span: 4 },
+            wrapperCol: { span: 18 }
+        }
+        return (
+            <Form layout='horizontal'>
+                <Form.Item label='角色名称' {...formLayout}>
+                    <Input disabled placeholder={config[roleName]} />
+                </Form.Item>
+                <Form.Item label='设置权限' {...formLayout}>
+                    <Transfer
+                        dataSource={this.props.mockData}
+                        titles={['待选用户', '已选用户']}
+                        showSearch
+                        targetKeys={this.props.targetKeys}
+                        render={item => item.title}
+                        listStyle={{ width: 156, height: 250 }}
+                        onChange={this.handleChange}
+
+                    />
+                </Form.Item>
+            </Form>
+        )
+    }
+}
+const FormUserAuthorization = Form.create()(UserAuthorization)
