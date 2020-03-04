@@ -3,13 +3,13 @@ import { Row, Col } from 'antd';
 import axios from './../../axios';
 import util from './../../utils/utils';
 import './index.less';
+import {connect} from 'react-redux';
 class Header extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       sysTime: '',
       weather: '阳光明媚',
-      topic: '主页'
     }
   }
   //因为sysTime每一秒更改一次，因此，必须声明state,如果只变化一次无需申明state
@@ -60,7 +60,7 @@ class Header extends React.Component {
           meunType ? '' :
             <Row className='breadcrumb'>
               <Col className='breadcrumb-title' span={4}>
-                {this.state.topic}
+                {this.props.meunName}
               </Col>
               <Col className='breadcrumb-time-weather' span={20}>
                 <span>{this.state.sysTime}</span>
@@ -73,4 +73,9 @@ class Header extends React.Component {
     )
   }
 }
-export default Header;
+const mapStateToProps=state=>{
+  return {
+    meunName:state.meunName
+  }
+}
+export default connect(mapStateToProps)(Header);

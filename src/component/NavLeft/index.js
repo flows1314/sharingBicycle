@@ -2,6 +2,8 @@ import React from 'react';
 import meunList from './../../config/meunConfig';
 import './index.less';
 import { NavLink } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {switchMeun} from '../../redux/action'
 import { Menu } from 'antd';
 const { SubMenu } = Menu;
 class NavLeft extends React.Component {
@@ -45,7 +47,10 @@ class NavLeft extends React.Component {
           mode="vertical"
           selectedKeys={[this.state.currentKey]}
           onClick={(item) => {
-            this.setState({ currentKey: item.key })
+            const meunName=item.item.props.children.props.children;
+            const {dispatch}=this.props;
+            this.setState({ currentKey: item.key });
+            dispatch(switchMeun(meunName))
           }}
         >
           {this.state.meunTreeNode}
@@ -54,4 +59,4 @@ class NavLeft extends React.Component {
     )
   }
 }
-export default NavLeft;
+export default connect()(NavLeft);
