@@ -3,7 +3,7 @@ import { Row, Col } from 'antd';
 import axios from './../../axios';
 import util from './../../utils/utils';
 import './index.less';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 class Header extends React.Component {
   constructor(props) {
     super(props)
@@ -51,7 +51,7 @@ class Header extends React.Component {
               </Col>
               : ''
           }
-          <Col span={meunType ?19:24}>
+          <Col span={meunType ? 19 : 24}>
             <span>欢迎，河畔一脚</span>
             <a href='#'>退出</a>
           </Col>
@@ -73,9 +73,10 @@ class Header extends React.Component {
     )
   }
 }
-const mapStateToProps=state=>{
+const mapStateToProps = state => {
   return {
-    meunName:state.meunName
+    meunName: state.meunName,
+    name: state.name
   }
 }
 export default connect(mapStateToProps)(Header);
